@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Business : Products</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background-color: #f5f5f5; }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #333; padding: 0.8rem 2rem;
+    }
+    nav ul {
+      list-style: none; display: flex; align-items: center;
+    }
+    nav ul li { margin-right: 25px; }
+    nav ul li a {
+      color: #fff; text-decoration: none; font-weight: bold;
+      transition: color .3s;
+    }
+    nav ul li a:hover { color: #ffcc00; }
+    .Owner_Logo { height: 40px; width: auto; margin-right: 40px; }
+
+    .container { padding: 20px; }
+    .product-card {
+      background: white; border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.1); margin-bottom: 20px;
+      padding: 20px; display: flex; gap: 20px;
+    }
+    .product-card img {
+      display: block; width: 150px; height: 150px; object-fit: cover;
+      border-radius: 10px; flex-shrink: 0;
+    }
+    @media (max-width: 500px) {
+      .product-card { flex-direction: column; align-items: center; }
+      .product-card img { width: 100%; max-width: 200px; margin-bottom: 12px; }
+      nav ul { flex-direction: column; align-items: flex-start; }
+      nav ul li { margin-bottom: 10px; }
+    }
+    .product-details h3 { margin: 0; color: #2e7d32; }
+    .product-details p { margin: 4px 0; }
+
+    .form-section {
+      background: white; border-radius: 12px; padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1); margin-bottom: 40px;
+    }
+    .form-section input,
+    .form-section textarea {
+      width: 100%; margin-bottom: 10px; padding: 8px;
+      border: 1px solid #ccc; border-radius: 6px;
+    }
+    .form-section button {
+      padding: 10px 20px; background: #388e3c; color: white;
+      border: none; border-radius: 6px; cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><img src="/Images/report-svgrepo-com.svg" alt="Owner_Logo" class="Owner_Logo"></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/products">Products</a></li>
+      <li><a href="/about">About Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <!-- Add Product Form -->
+    <div class="form-section">
+      <h2>Add New Product</h2>
+      <form id="addProductForm">
+        <input type="text"     name="pname"        placeholder="Product Name"     required />
+        <input type="number"   name="pprice"       placeholder="Product Price"    required />
+        <textarea              name="pdescription" placeholder="Product Description" rows="4" required></textarea>
+        <input type="file"     name="pimage"       accept="image/*" />
+        <button type="submit">Add Product</button>
+      </form>
+    </div>
+
+    <!-- Product List -->
+    <div id="productList"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("addProductForm");
+      const productList = document.getElementById("productList");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const pname = form.pname.value.trim();
+        const pprice = form.pprice.value.trim();
+        const pdesc = form.pdescription.value.trim();
+        const pimageFile = form.pimage.files[0];
+
+        if (!pname || !pprice || !pdesc) {
+          alert("Please fill in all required fields."); return;
+        }
+
+        const today = new Date();
+        const formattedDate = today.toISOString().split("T")[0].split("-").reverse().join("-");
+
+        if (pimageFile) {
+          const reader = new FileReader();
+          reader.onload = e => appendProductCard(pname, pprice, pdesc, formattedDate, e.target.result);
+          reader.readAsDataURL(pimageFile);
+        } else {
+          appendProductCard(pname, pprice, pdesc, formattedDate, null);
+        }
+        form.reset();
+      });
+
+      function appendProductCard(name, price, desc, date, imageSrc) {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img src="${imageSrc || 'https://via.placeholder.com/150'}" alt="Product Image" />
+          <div class="product-details">
+            <h3>${name}</h3>
+            <p><strong>Price:</strong> ₹${price}</p>
+            <p><strong>Description:</strong> ${desc}</p>
+            <p><strong>Added On:</strong> ${date}</p>
+          </div>`;
+        productList.prepend(card);
+      }
+    });
+  </script>
+</body>
+</html>

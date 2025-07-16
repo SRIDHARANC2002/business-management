@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation - Business</title> <!-- ✅ Fixed missing quote -->
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" th:href="@{/css/Navigation.css}">
+    <link rel="stylesheet" th:href="@{/css/Home.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+    <!-- ✅ Proper Thymeleaf fragment usage (optional if you're using fragments) -->
+    <!-- <nav th:replace="~{Navigation :: navbar()}"></nav> -->
+
+    <!-- ✅ Main Navigation Bar as Thymeleaf fragment -->
+    <nav th:fragment="navbar">
+        <ul>
+            <li>
+                <img src="/Images/report-svgrepo-com.svg" alt="Owner_Logo" class="Owner_Logo">
+            </li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/about">About Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Optional content block -->
+    <main>
+        <h1>Welcome to the Home Page</h1>
+        <p>This is your landing page with a functional navbar.</p>
+    </main>
+
+</body>
+</html>

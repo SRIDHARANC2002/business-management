@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business | Home</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    :root {
+      --primary-bg: #004d40;
+      --highlight: #ffd54f;
+      --text-light: #ffffff;
+      --overlay-color: rgba(0, 0, 0, 0.5);
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-main); background-color: #f5f5f5; line-height: 1.6; }
+
+    header {
+      position: absolute; top: 0; width: 100%;
+      background-color: var(--primary-bg); z-index: 100;
+      padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,.4);
+      animation: slideDown 1s ease-out;
+    }
+    .nav-container { display: flex; align-items: center; flex-wrap: wrap; }
+    .nav-logo { height: 45px; margin-right: 2rem; }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; align-items: center; }
+    nav li { margin-right: 1.5rem; }
+    nav a {
+      color: var(--text-light); text-decoration: none; font-weight: 600;
+      position: relative; transition: color .3s;
+    }
+    nav a::after {
+      content: ''; position: absolute; left: 0; bottom: -5px;
+      width: 0; height: 2px; background: var(--highlight);
+      transition: width .3s;
+    }
+    nav a:hover,
+    nav a:focus { color: var(--highlight); }
+    nav a:hover::after,
+    nav a:focus::after { width: 100%; }
+
+    .hero {
+      position: relative; height: 100vh; display: flex; align-items: center;
+      justify-content: center; text-align: center; overflow: hidden;
+    }
+    .hero video {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
+    }
+    .overlay {
+      position: absolute; inset: 0; background: var(--overlay-color); z-index: 1;
+    }
+    .hero-content {
+      position: relative; z-index: 2; color: var(--text-light);
+      padding: 1rem 2rem; animation: fadeInUp 1.4s ease-out forwards; opacity: 0;
+    }
+    .hero-content h1 { font-size: 3rem; margin-bottom: .5rem; animation: slideInLeft 1s ease-out .3s forwards; opacity: 0; }
+    .hero-content h3 { font-size: 1.5rem; margin-bottom: 1rem; animation: slideInRight 1s ease-out .6s forwards; opacity: 0; }
+    .hero-content p  { font-size: 1.125rem; animation: fadeInUp 1s ease-out 1s forwards; opacity: 0; }
+
+    @keyframes fadeInUp   { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideInLeft{ from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideInRight{from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideDown  { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; align-items: flex-start; margin-top: .5rem; }
+      nav li { margin: .5rem 0; }
+      .hero-content h1 { font-size: 2rem; }
+      .hero-content h3 { font-size: 1.2rem; }
+      .hero-content p  { font-size: 1rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav-container">
+      <img src="/Images/report-svgrepo-com.svg" alt="Company Logo" class="nav-logo" />
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/products">Products</a></li>
+          <li><a href="/about">About Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="/Videos/teaTree.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Welcome to Our Platform</h1>
+      <h3>Where Efficiency Meets Innovation!</h3>
+      <p>Discover powerful tools to run and grow your business.</p>
+    </div>
+  </section>
+</body>
+</html>
