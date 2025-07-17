@@ -12,9 +12,6 @@ public class PageController {
     public String home() {
         return "home"; // returns templates/home.html
     }
-
-  
-
     @GetMapping("/products")
     public String products() {
         return "products"; // returns templates/products.html
